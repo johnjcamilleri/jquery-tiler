@@ -14,7 +14,8 @@
 		// Default values
 		var defaults = {
 			widths: [300], // possible widths
-			force_width: true
+			force_width: true,
+			debug: false
 		};
 		var options = $.extend(defaults, opts);
 		
@@ -23,7 +24,8 @@
 		var container_height = this.height();
 		
 		// DEBUG ONLY
-		this.parent().find('.info').html("Container W: "+container_width+", H: "+container_height);
+		if (options.debug)
+			this.parent().find('.info').html("Container W: "+container_width+", H: "+container_height);
 		
 		// TODO: Attach some handler in case the page/container is resized?
 		
@@ -44,8 +46,6 @@
 					.css({
 						'float':'left',
 						'width':options.widths[0],
-						'background':'red',
-						'margin-right':'1px'
 					})
 					.prependTo(this)
 			}
@@ -58,14 +58,13 @@
 			// MAJOR TODO..
 		}
 		
-		// TO check: are we returning the right thing?
-		
 		// Apply to each direct child of matching item
-		return this.children(':gt('+(how_many_cols-1)+')').each(function(natural_index) {
+		this.children(':gt('+(how_many_cols-1)+')').each(function(natural_index) {
 			var obj = $(this);
 			
 			// Stick some basic info in it
-			obj.html("Index: "+natural_index+", W: "+obj.outerWidth()+", H: "+obj.outerHeight());
+			if (options.debug)
+				obj.html("Index: "+natural_index+", W: "+obj.outerWidth()+", H: "+obj.outerHeight());
 			
 			// Choose which column is the shortest
 			var col_index = 0;
@@ -93,6 +92,7 @@
 			}
 			
 		});
-
+		
+		return this;
 	};
 })(jQuery);

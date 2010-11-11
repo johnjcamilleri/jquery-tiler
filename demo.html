@@ -5,14 +5,13 @@
 		<script type="text/javascript" src="jquery.tiler.js"></script>
 		<style type="text/css">
 			h1 { margin-bottom:0; }
-			h2 { font-size:1em; margin-bottom:2em; font-weight:normal; }
-			#container { width:100%; }
+			.under-title { font-style:italic; }
+			h2 { margin:1em 0; border-top:2px groove; padding-top:1em; }
+			.container { width:100%; }
 			.block { margin:10px; padding:10px; background-color: lemonchiffon; float:left; font-size:normal; }
-			/*
 			.width1 { width:100px; } 
 			.width2 { width:200px; } 
 			.width3 { width:300px; } 
-			*/
 			.height1 { height:100px; } 
 			.height2 { height:200px; } 
 			.height3 { height:300px; } 
@@ -20,19 +19,44 @@
 	</head>
 	<body>
 		<h1>jquery-tiler demo</h1>
-		<h2><em>
+		<p class="under-title">
 			by <a href="http://johnjcamilleri.com/2010/11/jquery-tiler-plugin/">John J Camilleri</a>.<br/>
 			Version 1.0</br>
 			Updated 10/11/2010.
-		</em></h2>
+		</p>
 		
-		<button onclick="$('#container').tile()">Click me</button>
-		<span id="info"></span>
-
-		<div id="container">
-			<div class="block width1 height1">
-				<span>an inner span</span>
-			</div>
+		<div id="demo1" style="clear:both;">
+		<h2>Demo 1 - Fixed column width</h2>
+		<p>This forces all elements into a single column width</p>
+		Width: <input type="text" value="300" /> px
+		<button>Tile!</button>
+		<span class="info"></span>
+		<div class="container">
+			<div class="block height1"></div>
+			<div class="block height2"></div>
+			<div class="block height1"></div>
+			<div class="block height1"></div>
+			<div class="block height2"></div>
+			<div class="block height3"></div>
+			<div class="block height2"></div>
+			<div class="block height3"></div>
+			<div class="block height2"></div>
+			<div class="block height3"></div>
+			<div class="block height1"></div>
+			<div class="block height2"></div>
+		</div>
+		</div><!-- #demo1 -->
+		
+		<div id="demo2" style="clear:both;">
+		<h2>Demo 2 - use existing widths</h2>
+		<p>
+		This does not change the widths of the elements, and tries to determine columns sizes autmatically.
+		In general this will work better if the variety of actual widths are few and are multiples of eachother, e.g. 50, 150, 300 pixels.
+		</p>
+		<button>Tile!</button>
+		<span class="info"></span>
+		<div class="container">
+			<div class="block width1 height1"></div>
 			<div class="block width3 height2"></div>
 			<div class="block width2 height1"></div>
 			<div class="block width2 height1"></div>
@@ -45,6 +69,58 @@
 			<div class="block width3 height1"></div>
 			<div class="block width1 height2"></div>
 		</div>
+		</div><!-- #demo2 -->
+		
+		<div id="demo3" style="clear:both;">
+		<h2>Demo 3 - defining a set of possible widths</h2>
+		<p>
+		This will force the element widths to conform to the supplied set of widths. The columns are then calculated automatically.
+		As with demo 2, this works best when the possible width set is small and are multiples of eachother.
+		</p>
+		Allowable widths: <input type="text" value="150, 200, 300" /> (pixels)
+		<button>Tile!</button>
+		<span class="info"></span>
+		<div class="container">
+			<div class="block height1"></div>
+			<div class="block height2"></div>
+			<div class="block height1"></div>
+			<div class="block height1"></div>
+			<div class="block height2"></div>
+			<div class="block height3"></div>
+			<div class="block height2"></div>
+			<div class="block height3"></div>
+			<div class="block height2"></div>
+			<div class="block height3"></div>
+			<div class="block height1"></div>
+			<div class="block height2"></div>
+		</div>
+		</div><!-- #demo3 -->
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+				
+				// Demo 1 - fixed column width
+				$('#demo1 button').click(function(){
+					$('#demo1 .container').tile({
+						widths : [ $('#demo1 input').val() ]
+					});
+				});
+			
+				// Demo 2 - use existing widths
+				$('#demo2 button').click(function(){
+					$('#demo2 .container').tile({
+					});
+				});
+			
+				// Demo 3 - range of widths
+				$('#demo3 button').click(function(){
+					$('#demo3 .container').tile({
+						widths : [ $('#demo3 input').val() ]
+					});
+				});
+			
+			});
+		</script>
 		
 	</body>
 

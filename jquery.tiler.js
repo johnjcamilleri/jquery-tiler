@@ -21,9 +21,17 @@
 		// Get dimensions of container
 		var container_width = this.width();
 		var container_height = this.height();
-		$('#info').html("Container W: "+container_width+", H: "+container_height);
+		
+		// DEBUG ONLY
+		this.parent().find('.info').html("Container W: "+container_width+", H: "+container_height);
 		
 		// TODO: Attach some handler in case the page/container is resized?
+		
+		// Delete any previous columns and return childs to container
+		this.find('.jquery-tiler-column').each(function(i){
+			$(this).find('.jquery-tiler-block').appendTo( $(this).parent() );
+			$(this).remove();
+		});
 		
 		// Divide the page up into columns
 		var columns;
@@ -32,7 +40,7 @@
 			var how_many_cols = Math.floor( container_width / options.widths[0] );
 			for (var i = 0; i < how_many_cols; i++) {
 				$('<div />')
-					.addClass('column')
+					.addClass('jquery-tiler-column')
 					.css({
 						'float':'left',
 						'width':options.widths[0],
@@ -42,7 +50,7 @@
 					.prependTo(this)
 			}
 			// Get hold of our new columns for later
-			columns = this.find('div:lt('+how_many_cols+')');
+			columns = this.find('.jquery-tiler-column');
 		} else {
 			// We need to find the different widths present and make some intellignet
 			// calculation of optimal number of columns and their width
@@ -73,6 +81,7 @@
 			
 			// Fix it and move it to column
 			obj
+				.addClass('jquery-tiler-block')
 				.css({'float':'none'})
 				.appendTo( column );
 				

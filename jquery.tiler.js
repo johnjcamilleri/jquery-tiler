@@ -55,10 +55,10 @@
 			// We need to find the different widths present and make some intellignet
 			// calculation of optimal number of columns and their width
 			
-			// MAJOR TODO
+			// MAJOR TODO..
 		}
 		
-		// TODO: are we retrugnint the right thing?
+		// TO check: are we returning the right thing?
 		
 		// Apply to each direct child of matching item
 		return this.children(':gt('+(how_many_cols-1)+')').each(function(natural_index) {
